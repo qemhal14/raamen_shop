@@ -1,0 +1,69 @@
+[
+    [
+        "Index",
+        "Dish",
+        "Category",
+        "Stock",
+        "Price"
+    ],
+    [
+        "Shoyu Ramen",
+        "Raamen",
+        50,
+        50000
+    ],
+    [
+        "Shio Ramen",
+        "Raamen",
+        47,
+        55000
+    ],
+    [
+        "Miso Ramen",
+        "Raamen",
+        39,
+        60000
+    ],
+    [
+        "Tempura Udon",
+        "Udon",
+        67,
+        65000
+    ],
+    [
+        "Kitsune Udon",
+        "Udon",
+        48,
+        50000
+    ],
+    [
+        "Kake Soba",
+        "Soba",
+        43,
+        45000
+    ],
+    [
+        "Gyoza",
+        "Snack",
+        40,
+        35000
+    ],
+    [
+        "Ocha",
+        "Drinks",
+        50,
+        15000
+    ],
+    [
+        "Coffee",
+        "Drinks",
+        40,
+        23000
+    ],
+    [
+        "Curry Rice",
+        "Rice",
+        40,
+        50000
+    ]
+]
