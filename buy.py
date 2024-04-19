@@ -1,24 +1,35 @@
 from tabulate import tabulate
-import access as acc
-import show_table as table
+import function as fn
 
 def input_4():
     cart_head = [["Dish", "Quantity", "Price"]] 
     total_price = 0
-    dish_count = len(acc.table_dish) - 1
+    dish_count = len(fn.table_dish) - 1
     
     while True:
-        print("Our Menu")
-        table.table()
-        input_buy = int(input("Enter dish index you want to order :")) 
+        fn.table()
+        input_buy = input("Enter dish index you want to order :")
 
-        while input_buy > dish_count:
+        try:
+            input_buy = int(input_buy)
+        except ValueError:
+            print("Please enter a correct index menu! ")
+            continue
+
+        if input_buy > dish_count:
             print("Enter a correct index!")
-            input_buy = int(input("Enter dish index you want to order :"))  
+            continue
         
-        input_qty = int(input("Enter quantity :"))
+        while True:
+            input_qty = input("Enter quantity :")
+            try:
+                input_qty = int(input_qty)
+                break
+            except ValueError:
+                print("Please enter a valid number for the quantity!")
+                continue
 
-        dish_picked = acc.table_dish[input_buy]
+        dish_picked = fn.table_dish[input_buy]
         stock_dish_picked = dish_picked[2]
         price_dish_picked = dish_picked[3] 
 
@@ -29,23 +40,53 @@ def input_4():
             cart_head.append(cart)
             print(tabulate(cart_head))
             # Update stock
-            acc.table_dish[input_buy][2] -= input_qty
-            add_another = input("Do you like to add antoher dish? (yes/no) :")
-            add_input = add_another.lower()
-            acc.savefile()
+            fn.table_dish[input_buy][2] -= input_qty
+            add_another = input("Do you like to add antoher dish? (yes/no) :").lower()
+            fn.savefile()
             
-            while add_input not in ["yes", "no"]:
-                add_another = input("Do you like to add antoher dish? (yes/no) :")
-                add_input = add_another.lower()
+            while add_another not in ["yes", "no"]:
+                add_another = input("Do you like to add antoher dish? (yes/no) :").lower()
 
-            if add_input == "yes":
+            if add_another == "yes":
                 continue
             
-            elif add_input == "no":
+            elif add_another == "no":
                 print(tabulate(cart_head))
                 print("Here is the sum of your order", total_price)
+                if total_price > 150000:
+                    get_cb = True
+                    print("Your order is above Rp 150.000, you got 10% Cashback!")
+                    print("Apply 'GET10CB' below for the Cashback!")
 
-                while True:
+                    while True:
+                        cb_inp = input("Enter code here :")
+                        if cb_inp == "GET10CB":
+                            print("Voucher successfuly applied!")
+                            price_after_cb = total_price - (total_price * 0.1)
+                            print("Here is the sum of your order after Cashback", price_after_cb)
+                            break
+                        else:
+                            print("Voucher not matched!")
+                            continue
+
+                else:
+                    get_cb = False
+
+                while get_cb == True:
+                    payment = int(input("Enter money :"))
+                    if payment < price_after_cb:
+                        print("Transaction cannot continue, your money is not enough!")
+                        print("Your money is short",price_after_cb - payment)
+            
+                    elif payment == price_after_cb:
+                        print("Thank you for ordering, please wait while we prepare your food :)")
+                        break
+            
+                    else:
+                        print("Thank you for ordering, please wait while we prepare your food :)")
+                        print(payment - price_after_cb, "is your change.")
+                        break
+                while get_cb == False:
                     payment = int(input("Enter money :"))
                     if payment < total_price:
                         print("Transaction cannot continue, your money is not enough!")
@@ -59,6 +100,7 @@ def input_4():
                         print("Thank you for ordering, please wait while we prepare your food :)")
                         print(payment - total_price, "is your change.")
                         break
+                
             else:
                 print("please input yes or no")
             break

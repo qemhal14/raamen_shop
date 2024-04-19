@@ -1,42 +1,32 @@
-import update_stock as update
-import buy as buy
-import delete_stock as delete
-import interface as menu
 import show_menu as showmenu
+import update_stock as update
+import delete_stock as delete
+import buy as buy
+import function as fn
 
-user = input("Dou you want to continue as (owner/customer) :")
-user_inp = user.lower()
+user = input("Dou you want to continue as (owner/customer) :").lower()
 user_login = False
-
 while True:
-    user_login = False 
-    if user_inp == "owner":
+    
+    if user == "owner":
         password = input("Please enter password :")
-
         if password == "admin":
-                print("Welcome owner!")
                 user_login = True
                 break
-    elif user_inp == "customer":
-        print("Welcome customer!")
+        else:
+            fn.error_messsage()
+            continue
+    elif user == "customer":
         user_login = True
         break
-    elif user_inp not in ["owner", "customer"]:
-        print("Please input owner or customer!")
-        user = input("Dou you want to continue as (owner/customer) :")
-        user_inp = user.lower()
-    else:
-        print("Please enter a correct password!")
+    elif user not in ["owner", "customer"]:
+        continue
 
 while user_login == True:
 
-    if user_inp == "owner":
-        print("Good Morning Owner, let's cook some dish!")
-    elif user_inp == "customer":
-        print("いらっしゃいませ/Irashaimase, we have some delicious raamen special for you!")
-
-    menu.menu_interface()
-    menu_input = menu.menu_input() 
+    fn.welcome(user)
+    fn.menu_interface()
+    menu_input = fn.menu_input() 
         
     if menu_input == "1":
         showmenu.menu()
@@ -46,7 +36,6 @@ while user_login == True:
     elif menu_input == "2" and user == "customer":
         print("Sorry this feature only available for owner")
          
-
     elif menu_input == "3" and user == "owner":
         delete.input_3()
     elif menu_input == "3" and user == "customer":
@@ -60,13 +49,5 @@ while user_login == True:
         break
             
     else:
-        print("Input a correct index!")   
-
-
-
-        
-        
-
-
-    
+        fn.error_messsage()
 
