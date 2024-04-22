@@ -1,40 +1,30 @@
 import function as fn
 
-def input_3():
-    choice_3 = input("Do you want to proceed with the dish deletion ? (yes/no) :").lower()
-    while choice_3 not in ["yes", "no"]:
-         print("Please enter yes or no!")
-         choice_3 = input("Do you want to proceed with the dish deletion ? (yes/no) :").lower()
-    
-    if choice_3 == "yes":
-            dish_count = len(fn.table_dish) - 1 #excluding the headers
-
+def delete_dish():
+    while True:
+        choice_3 = fn.user_inp("Do you want to proceed with the dish deletion ? (yes/no) :", ["yes", "no"])
+        if choice_3 == "yes":
+            fn.total_dish()
             while True:
                 fn.table()
                 input_del = input("Enter dish index you want to delete :")
-                if not input_del.isdigit():
-                     print("Enter an index of a dish!")
+                if input_del.isalpha():
+                    fn.error_message()
+                    continue
+                input_del = int(input_del)
+                if input_del > fn.total_dish():
+                    fn.error_message()
+                    continue
                 else:
-                    index_del = int(input_del)
-                    if index_del > dish_count:
-                         print("Please enter a correct index!")
-                    else:
-                         break
+                    break
+        else:
+            break
+        dish_name = fn.table_dish[input_del][0]
+        confirm_inp = fn.user_inp(f"Are you sure you eant to delete dish {dish_name} from the menu ? (yes/no) :", ["yes", "no"])
 
-            dish_name = fn.table_dish[index_del][0]
-            confirm_inp = input(f"Are you sure you eant to delete dish {dish_name} from the menu ? (yes/no) :").lower()
-            while confirm_inp not in ["yes", "no"]:
-                print("Please enter yes or no!")
-                confirm_inp = input(f"Are you sure you eant to delete dish {dish_name} from the menu ? (yes/no) :").lower()
-
-            if confirm_inp == "yes":
-                del fn.table_dish[index_del]
-                fn.savefile()
-                print(f"Dish {dish_name} successfuly deleted!")
-                
-            elif confirm_inp == "no":
-                print("Delete action canceled!")
-                
-    elif choice_3 == "no":
-         print("Action canceled!")
-        
+        if confirm_inp == "yes":
+            fn.delete(input_del)
+            
+        elif confirm_inp == "no" or choice_3 == "no":
+            print("Delete action canceled!")
+    

@@ -1,17 +1,33 @@
 import buy as buy
 import function as fn
 
-def menu():
-    while True:
-        print("Our Menu")
-        fn.table()
-        input_1 = input("Do you want to 1. Order a meal 2. back to the main menu (1/2):")
+def menu_options():
+    print(
+    '''
+        
+    Menu options :
+    1. Sort by category
+    2. Sort by price
+    3. Order a menu
+    4. Back to main menu
+        ''')
 
-        while not input_1 == "1" and not input_1 == "2":
-                input_1 = input("Do you want to 1. Order a meal 2. back to the main menu (1/2):")
+def menu():
+    fn.table()
+    while True:
+        menu_options()
+        input_1 = fn.user_inp("Input a menu you want to run (1/2/3/4):", ["1", "2", "3", "4"])
 
         if input_1 == "1":
-            buy.input_4()
+            fn.sort_category()
+            continue
+        elif input_1 == "2":
+            fn.sort_price()
+            continue
+        elif input_1 == "3":
+            buy.order()
             break
-        else:
+        elif input_1 == "4":
             break
+        
+      
